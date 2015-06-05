@@ -1,0 +1,37 @@
+<section id="result" class="row">
+	<div class="col-xs-12">
+		<div class="row">
+			<div class="col-xs-6">
+				Total
+			</div>	
+			<div id="total" class="col-xs-6 text-right">
+				{{totalAmount || '$0.00'}}
+			</div>	
+		</div>
+	</div>	
+</section>
+
+<form name="mainForm" id="mainForm">
+
+	<fieldset class="row" ng-repeat="f in acFields">
+		<div ng-if="f.type != 'time'">
+			<input ng-model="f.name" name="{{f.name}}" type="{{f.type}}" placeholder="{{f.label}}" required="{{f.required}}" class="form-control" ng-if="f.type == 'text'" />
+			<select ng-model="f.name" name="{{f.name}}" required="{{f.required}}" class="form-control" ng-if="f.type == 'select'" ng-options="o for o in f.options" >
+				<option value="">{{f.label || "Select an option"}}</option>
+			</select>
+		</div>
+		<!-- <div ng-if="f.type == 'time'" ng-controller="TimeCtrl"> -->
+			<!-- <input ng-model="f.name" name="{{f.name}}" type="{{f.type}}" step="360" required="{{f.required}}" class="form-control" ng-if="f.type == 'time'" value="12:00:00" /> -->
+			<!-- <timepicker ng-model="f.name" ng-change="timeChanged()" hour-step="1" minute-step="mstep" show-meridian="ismeridian"></timepicker> -->
+			<!-- <pre class="alert alert-info">The time is {{mytime | date: 'shortTime'}}</pre> -->
+		<!-- </div> -->
+	</fieldset>
+
+		<div ng-controller="TimeCtrl">
+			<!-- <input ng-model="f.name" name="{{f.name}}" type="{{f.type}}" step="360" required="{{f.required}}" class="form-control" ng-if="f.type == 'time'" value="12:00:00" /> -->
+			<timepicker ng-model="mytime" ng-change="timeChanged()" hour-step="1" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+			<pre class="alert alert-info">The time is {{mytime | date: 'shortTime'}}</pre>
+		</div>
+	
+	<p>This is the acForm view.</p>
+</form>
