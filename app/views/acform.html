@@ -13,25 +13,42 @@
 
 <form name="mainForm" id="mainForm">
 
-	<fieldset class="row" ng-repeat="f in acFields">
-		<div ng-if="f.type != 'time'">
-			<input ng-model="f.name" name="{{f.name}}" type="{{f.type}}" placeholder="{{f.label}}" required="{{f.required}}" class="form-control" ng-if="f.type == 'text'" />
-			<select ng-model="f.name" name="{{f.name}}" required="{{f.required}}" class="form-control" ng-if="f.type == 'select'" ng-options="o for o in f.options" >
-				<option value="">{{f.label || "Select an option"}}</option>
-			</select>
-		</div>
-		<!-- <div ng-if="f.type == 'time'" ng-controller="TimeCtrl"> -->
-			<!-- <input ng-model="f.name" name="{{f.name}}" type="{{f.type}}" step="360" required="{{f.required}}" class="form-control" ng-if="f.type == 'time'" value="12:00:00" /> -->
-			<!-- <timepicker ng-model="f.name" ng-change="timeChanged()" hour-step="1" minute-step="mstep" show-meridian="ismeridian"></timepicker> -->
-			<!-- <pre class="alert alert-info">The time is {{mytime | date: 'shortTime'}}</pre> -->
-		<!-- </div> -->
-	</fieldset>
+	<div ng-repeat="f in fieldsets">
+		<fieldset class="row" id="{{f.name}}">
+			<div ng-repeat="l in f.fields">
+				<label class="{{l.class}}" ng-show="l.visible">
+					<label for="{{l.name}}" ng-if="l.type != 'checkbox'">{{l.label}}</label>
+					<!-- Text || Number -->
+					<input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" required="{{l.required}}" class="form-control" ng-if="l.type == 'text'" />
+					<input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" required="{{l.required}}" class="form-control" min="0" ng-if="l.type == 'number'" />
+					
+					<!-- Checkbox -->
+					<input type="{{l.type}}" ng-model="l.selected" name="{{l.name}}" required="{{l.required}}" ng-change="toggleHide(l.reveals)" ng-if="l.type == 'checkbox'" /> <span ng-if="l.type == 'checkbox'">{{l.label}}</span>
 
-		<div ng-controller="TimeCtrl">
-			<!-- <input ng-model="f.name" name="{{f.name}}" type="{{f.type}}" step="360" required="{{f.required}}" class="form-control" ng-if="f.type == 'time'" value="12:00:00" /> -->
-			<timepicker ng-model="mytime" ng-change="timeChanged()" hour-step="1" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-			<pre class="alert alert-info">The time is {{mytime | date: 'shortTime'}}</pre>
-		</div>
-	
-	<p>This is the acForm view.</p>
+					<!-- Radio / Button Group -->
+						
+					<div class="btn-group col-xs-12" data-toggle="buttons" ng-if="l.type == 'radio'">
+						<label for="" class="btn btn-primary col-xs-6" ng-repeat="o in l.options">
+							<input type="radio" id="{{o}}" name="{{l.name}}" autocomplete="off">{{o}}
+						</label>
+					</div>
+
+					<!-- Dropdown -->
+					<select ng-model="l.name" name="{{l.name}}" required="{{l.required}}" class="form-control" ng-if="l.type == 'select'" ng-options="o for o in l.options">
+						<option value="">{{l.label || "Select an option"}}</option>
+					</select>
+
+					<!-- Time -->
+					<div ng-controller="TimeCtrl" ng-if="l.type == 'time'">
+						<h3>{{l.label}}</h3>
+						<input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" step="360" required="{{l.required}}" class="form-control visible-sm visible-xs" />
+						<timepicker ng-model="l.value" name="{{l.name}}" ng-change="changed(l.value)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" class="hidden-sm hidden-xs"></timepicker>
+					</div>
+
+				</label>
+			</div>
+		</fieldset>
+	</div>
+
+
 </form>

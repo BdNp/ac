@@ -1,4 +1,4 @@
-'use strict';
+  'use strict';
 
 /**
  * @ngdoc function
@@ -9,40 +9,311 @@
  */
 angular.module('acApp')
   .controller('AcformCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
 
+  $scope.toggleHide = function(targets) {
+    angular.forEach(targets, function(t){
+      angular.forEach($scope.acFields, function(f){
+        f.visible = (f.name == t) ? !f.visible : f.visible;
+      });
+    });    
+  }
 
   // Dropdown options for Union, Role & Format. Change later to objects
   $scope.zoneOptions = ['NY', 'LA'];
-  $scope.unionOptions = [ 'SAG', 'AFTRA', 'SAG-AFTRA', 'SAG CW', 'AFTRA CW', 'SAG-AFTRA CW'];
-  $scope.roleOptions = [ 'Background', 'Special Ability Background', 'Stand-In', 'Under Five', 'Stunt', 'Principal'];
-  $scope.formatOptions = [ 'Film/TV', 'Commercial'];
+  $scope.unionOptions = ['SAG', 'AFTRA', 'SAG-AFTRA', 'SAG CW', 'AFTRA CW', 'SAG-AFTRA CW'];
+  $scope.roleOptions = ['Background', 'Special Ability Background', 'Stand-In', 'Under Five', 'Stunt', 'Principal'];
+  $scope.formatOptions = ['Film/TV', 'Commercial'];
+  $scope.wardrobeOptions = ['Formal / Religious', 'Police'];
+  $scope.propOptions = ['Pet', 'Golf Club Set', 'Tennis Racquet', 'Luggage', 'Camera', 'Skis and Poles', 'Other'];
+  $scope.carOptions = ['Car', 'Trailer', 'Bicycle', 'Moped', 'Motorcycle', 'Police Motorcycle', 'Skates/Skateboard'];
 
   //Fields
   $scope.acFields = [
-    { index: 0,  fieldset: '', name: 'username',  	label: 'Your Name', type: 'text',   required: true },
-    { index: 1,  fieldset: '', name: 'zone', 		label: 'Zone',		type: 'radio',  required: true, options: $scope.zoneOptions },
-    { index: 2,  fieldset: '', name: 'union', 		label: 'Union', 	type: 'select', required: true, options: $scope.unionOptions },
-    { index: 3,  fieldset: '', name: 'role', 	 	label: 'Role', 		type: 'select', required: true, options: $scope.roleOptions },
-    { index: 4,  fieldset: '', name: 'format', 		label: 'Format', 	type: 'select', required: true, options: $scope.formatOptions },
-    { index: 5,  fieldset: '', name: 'fitting', 	label: 'Wardrobe Fitting', type: 'checkbox',  	    options: ['Wardrobe Fitting'] },
-    { index: 6,  fieldset: '', name: 'timeIn', 		label: 'Time In', 	type: 'time',   required: true },
-    { index: 7,  fieldset: '', name: 'timeOut', 	label: 'Time Out', 	type: 'time',   required: true },
-    { index: 8,  fieldset: '', name: 'NDBIn', 		label: 'NDB In', 	type: 'time' },
-    { index: 9,  fieldset: '', name: 'NDBOut', 		label: 'NDB Out', 	type: 'time' },
-    { index: 10, fieldset: '', name: 'mealBreaks', 	label: 'Meal Breaks', type: 'checkbox', 		   options: ['Meal Breaks'] },
-    { index: 11, fieldset: '', name: 'meal1In', 	label: 'meal1 In', 	type: 'time' },
-    { index: 12, fieldset: '', name: 'meal1Out', 	label: 'meal1 Out', type: 'time' },
-    { index: 13, fieldset: '', name: 'meal2In', 	label: 'meal2 In', 	type: 'time' },
-    { index: 14, fieldset: '', name: 'meal2Out', 	label: 'meal2 Out', type: 'time' },
-    { index: 15, fieldset: '', name: 'lunchPenalties', label: 'Lunch Penalties', type: 'number' },
-    { index: 16, fieldset: '', name: 'dinnerPenalties', label: 'Dinner Penalties', type: 'number' },
-
+    {
+      fieldset: 'project', 
+      name: 'username',
+      label: 'Your Name',
+      type: 'text',
+      class: 'col-xs-12 col-sm-12 col-md-12 col-lg-6',     
+      required: true,
+      visible: true,
+    },
+    {
+      fieldset: 'project', 
+      name: 'project',
+      label: 'Project Name',
+      type: 'text',     
+      class: 'col-xs-12 col-sm-12 col-md-12 col-lg-6',     
+      required: true,
+      visible: true,
+    },
+    {
+      fieldset: 'project', 
+      name: 'zone',
+      label: 'Zone',		         
+      type: 'radio',    
+      class: 'col-xs-12 col-sm-12 col-md-12 col-lg-6',     
+      options: $scope.zoneOptions,
+      required: true, 
+      visible: true,
+    },
+    {
+      fieldset: 'project', 
+      name: 'union',
+      label: 'Union',   
+      type: 'select',   
+      class: 'col-xs-12 col-sm-12 col-md-12 col-lg-6',     
+      options: $scope.unionOptions,
+      required: true, 
+      visible: true,
+    },
+    {
+      fieldset: 'project', 
+      name: 'role',
+      label: 'Role',
+      type: 'select',   
+      class: 'col-xs-12 col-sm-12 col-md-12 col-lg-6',     
+      options: $scope.roleOptions,
+      required: true, 
+      visible: true,
+    },
+    {
+      fieldset: 'project', 
+      name: 'format',
+      label: 'Format',   
+      type: 'select',   
+      class: 'col-xs-12 col-sm-12 col-md-12 col-lg-6',     
+      options: $scope.formatOptions,
+      required: true, 
+      visible: true,
+    },
+    {
+      fieldset: 'fitting', 
+      name: 'fitting',
+      label: 'Wardrobe Fitting', 
+      type: 'checkbox',
+      class: "col-xs-12",
+      reveals: ['ndb', 'mealBreaks', 'lunchPenalties', 'dinnerPenalties', 'wardrobeChanges', 'specialWardrobe', 'holiday', 'hair', 'wet', 'smoke', 'props', 'vehicle', 'mileage', 'misc', 'adjustment'],
+      visible: true,
+    },
+    {
+      fieldset: 'times', 
+      name: 'timeIn',
+      label: 'Time In', 
+      type: 'time',     
+      class: "col-xs-6",
+      required: true,
+      visible: true,
+    },
+    {
+      fieldset: 'times', 
+      name: 'timeOut',
+      label: 'Time Out', 
+      type: 'time',     
+      class: "col-xs-6",
+      required: true,
+      visible: true,
+    },
+    {
+      fieldset: 'times', 
+      name: 'ndb',
+      label: 'NDB',
+      type: 'checkbox',
+      class: "col-xs-12",
+      reveals: ['NDBIn', 'NDBOut'],
+      visible: true,
+    },
+    {
+      fieldset: 'times', 
+      name: 'NDBIn',
+      label: 'NDB In',   
+      type: 'time',
+      class: "col-xs-6",
+      visible: false,
+    },
+    {
+      fieldset: 'times', 
+      name: 'NDBOut',
+      label: 'NDB Out',
+      type: 'time',
+      class: "col-xs-6",
+      visible: false,
+    },
+    {
+      fieldset: 'meals', 
+      name: 'meal1Break',
+      label: '1st Meal Break',
+      type: 'checkbox',
+      class: "col-xs-6",
+      reveals: ['meal1In', 'meal1Out'],
+      visible: true,
+    },
+    {
+      fieldset: 'meals', 
+      name: 'meal2Break', 
+      label: '2nd Meal Break',
+      type: 'checkbox',
+      class: "col-xs-6",
+      reveals: ['meal2In', 'meal2Out'],
+      visible: true,
+    },
+    {
+      fieldset: 'meals', 
+      name: 'meal1In',
+      label: 'meal1 In', 
+      type: 'time',
+      class: "col-xs-6",
+      visible: false,
+    },
+    {
+      fieldset: 'meals', 
+      name: 'meal1Out',
+      label: 'meal1 Out',
+      type: 'time',
+      class: "col-xs-6",
+      visible: false,
+    },
+    {
+      fieldset: 'meals', 
+      name: 'meal2In',
+      label: 'meal2 In', 
+      type: 'time',
+      class: "col-xs-6",
+      visible: false,
+    },
+    {
+      fieldset: 'meals', 
+      name: 'meal2Out',
+      label: 'meal2 Out',
+      type: 'time',
+      class: "col-xs-6",
+      visible: false,
+    },
+    {
+      fieldset: 'meals', 
+      name: 'lunchPenalties',  
+      label: 'Lunch Penalties',  
+      type: 'number',
+      class: "col-xs-6",
+      visible: true,
+    },
+    {
+      fieldset: 'meals', 
+      name: 'dinnerPenalties', 
+      label: 'Dinner Penalties', 
+      type: 'number',
+      class: "col-xs-6",
+      visible: true,
+    },
+    {
+      fieldset: 'wardrobe', 
+      name: 'wardrobeChanges', 
+      label: 'Wardrobe Changes', 
+      type: 'number', 
+      class: "col-xs-6",
+      visible: true,
+    },
+    {
+      fieldset: 'wardrobe', 
+      name: 'specialWardrobe', 
+      label: 'SpecialWardrobe', 
+      type: 'select',
+      class: "col-xs-6",
+      options: $scope.wardrobeOptions,
+      visible: true,
+    },
+    {
+      fieldset: 'bumps', 
+      name: 'hair',
+      label: 'Hair / Beard / Makeup', 
+      type: 'checkbox',
+      class: "col-xs-4",
+      visible: true,
+    },
+    {
+      fieldset: 'bumps', 
+      name: 'wet',
+      label: 'Wet Pay', 
+      type: 'checkbox',
+      class: "col-xs-4",
+      visible: true,
+    },
+    {
+      fieldset: 'bumps', 
+      name: 'smoke',
+      label: 'Smoke Pay', 
+      type: 'checkbox',
+      class: "col-xs-4",
+      visible: true,
+    },
+    {
+      fieldset: 'bumps', 
+      name: 'adjustment',
+      label: 'Adjustment to Base',
+      type: 'number',     
+      class: "col-xs-12",
+      visible: true,
+    },
+    {
+      fieldset: 'extras', 
+      name: 'holiday',
+      label: 'Holiday Pay', 
+      type: 'checkbox',
+      class: "col-xs-12",
+      visible: true,
+    },
+    {
+      fieldset: 'extras', 
+      name: 'props', 
+      label: 'Props', 
+      type: 'select',
+      class: "col-xs-12",
+      options: $scope.propOptions,
+      visible: true,
+    },
+    {
+      fieldset: 'extras', 
+      name: 'vehicle', 
+      label: 'Vehicle', 
+      type: 'select',
+      class: "col-xs-12",
+      options: $scope.carOptions,
+      visible: true,
+    },
+    {
+      fieldset: 'extras', 
+      name: 'mileage',
+      label: 'Mileage',
+      type: 'number',     
+      class: "col-xs-12",
+      visible: true,
+    },
+    {
+      fieldset: 'extras', 
+      name: 'misc',
+      label: 'Misc. Extras',
+      type: 'number',     
+      class: "col-xs-12",
+      visible: true,
+    },
   ];
-  console.log($scope.fields);
 
+  $scope.fieldsets = [
+    { name: 'project', labelClass: 'col-xs-12 col-sm-12 col-md-12 col-lg-6', pre: '', header: '', post: '', fields: [] },
+    { name: 'fitting', labelClass: 'col-xs-12', pre: '', header: '', post: '', fields: [] },
+    { name: 'times', labelClass: 'col-xs-6 col-sm-6', pre: '', header: '', post: '', fields: [] },
+    { name: 'ndb', labelClass: 'col-xs-6 col-sm-6', pre: '', header: '', post: '', fields: [] },
+    { name: 'meals', labelClass: 'col-xs-6 col-sm-6', pre: '', header: '', post: '', fields: [] },
+    { name: 'wardrobe', labelClass: 'col-xs-6 col-sm-6', pre: '', header: '', post: '', fields: [] },
+    { name: 'bumps', labelClass: 'col-xs-6 col-sm-6', pre: '', header: '', post: '', fields: [] },
+    { name: 'extras', labelClass: 'col-xs-12 col-sm-6', pre: '', header: '', post: '', fields: [] },
+  ];
+
+  angular.forEach($scope.fieldsets, function(f){ 
+    angular.forEach($scope.acFields, function(acf){
+      if (f.name == acf.fieldset)
+        f.fields.push(acf);
+    });
   });
+
+});
