@@ -18,14 +18,20 @@ angular.module('acApp')
     });    
   }
 
+  $scope.userValues = {};
+  $scope.updateValues = function(k,v) {
+    console.log(k);
+    $scope.userValues[k] = v;
+  }
+
   // Dropdown options for Union, Role & Format. Change later to objects
   $scope.zoneOptions = ['NY', 'LA'];
   $scope.unionOptions = ['SAG', 'AFTRA', 'SAG-AFTRA', 'SAG CW', 'AFTRA CW', 'SAG-AFTRA CW'];
   $scope.roleOptions = ['Background', 'Special Ability Background', 'Stand-In', 'Under Five', 'Stunt', 'Principal'];
   $scope.formatOptions = ['Film/TV', 'Commercial'];
-  $scope.wardrobeOptions = ['Formal / Religious', 'Police'];
-  $scope.propOptions = ['Pet', 'Golf Club Set', 'Tennis Racquet', 'Luggage', 'Camera', 'Skis and Poles', 'Other'];
-  $scope.carOptions = ['Car', 'Trailer', 'Bicycle', 'Moped', 'Motorcycle', 'Police Motorcycle', 'Skates/Skateboard'];
+  $scope.wardrobeOptions = ['None', 'Formal / Religious', 'Police'];
+  $scope.propOptions = ['None', 'Pet', 'Golf Club Set', 'Tennis Racquet', 'Luggage', 'Camera', 'Skis and Poles', 'Other'];
+  $scope.carOptions = ['None', 'Car', 'Trailer', 'Bicycle', 'Moped', 'Motorcycle', 'Police Motorcycle', 'Skates/Skateboard'];
 
   //Fields
   $scope.acFields = [

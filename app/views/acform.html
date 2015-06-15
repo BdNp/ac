@@ -12,6 +12,7 @@
 </section>
 
 <form name="mainForm" id="mainForm">
+					{{userValues || 0}}
 
 	<div ng-repeat="f in fieldsets">
 		<fieldset class="row" id="{{f.name}}">
@@ -19,30 +20,30 @@
 				<label class="{{l.class}}" ng-show="l.visible">
 					<label for="{{l.name}}" ng-if="l.type != 'checkbox'">{{l.label}}</label>
 					<!-- Text || Number -->
-					<input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" required="{{l.required}}" class="form-control" ng-if="l.type == 'text'" />
-					<input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" required="{{l.required}}" class="form-control" min="0" ng-if="l.type == 'number'" />
-					
+					<input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" required="{{l.required}}" class="form-control" ng-change="updateValues(l.name, l.value)" ng-if="l.type == 'text'" />
+					<input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" required="{{l.required}}" class="form-control" ng-change="updateValues(l.name, l.value)" min="0" ng-if="l.type == 'number'" />
 					<!-- Checkbox -->
-					<input type="{{l.type}}" ng-model="l.selected" name="{{l.name}}" required="{{l.required}}" ng-change="toggleHide(l.reveals)" ng-if="l.type == 'checkbox'" /> <span ng-if="l.type == 'checkbox'">{{l.label}}</span>
+					<input type="{{l.type}}" ng-model="l.selected" name="{{l.name}}" required="{{l.required}}" ng-change="toggleHide(l.reveals); updateValues(l.name, l.value)" ng-if="l.type == 'checkbox'" /> <span ng-if="l.type == 'checkbox'">{{l.label}}</span>
 
 					<!-- Radio / Button Group -->
 						
 					<div class="btn-group col-xs-12" data-toggle="buttons" ng-if="l.type == 'radio'">
 						<label for="" class="btn btn-primary col-xs-6" ng-repeat="o in l.options">
-							<input type="radio" id="{{o}}" name="{{l.name}}" autocomplete="off">{{o}}
+							<input type="radio" ng-model="l.name" value="asdasd" id="{{o}}" name="{{l.name}}" autocomplete="off">{{o}}
 						</label>
+						{{ l.name }} : {{l.value || 0}}
 					</div>
 
 					<!-- Dropdown -->
-					<select ng-model="l.name" name="{{l.name}}" required="{{l.required}}" class="form-control" ng-if="l.type == 'select'" ng-options="o for o in l.options">
+					<select ng-model="l.value" name="{{l.name}}" required="{{l.required}}" class="form-control" ng-if="l.type == 'select'" ng-change="updateValues(l.name, l.value)" ng-options="o for o in l.options">
 						<option value="">{{l.label || "Select an option"}}</option>
 					</select>
 
 					<!-- Time -->
 					<div ng-controller="TimeCtrl" ng-if="l.type == 'time'">
 						<h3>{{l.label}}</h3>
-						<input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" step="360" required="{{l.required}}" class="form-control visible-sm visible-xs" />
-						<timepicker ng-model="l.value" name="{{l.name}}" ng-change="changed(l.value)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" class="hidden-sm hidden-xs"></timepicker>
+						<input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" step="360" required="{{l.required}}" ng-change="updateValues(l.name, l.value)" class="form-control visible-sm visible-xs" />
+						<timepicker ng-model="l.value" name="{{l.name}}" ng-change="changed(l.value)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ng-change="updateValues(l.name, l.value)" class="hidden-sm hidden-xs"></timepicker>
 					</div>
 
 				</label>
