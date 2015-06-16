@@ -4,7 +4,7 @@
 			<div class="col-xs-6">
 				Total
 			</div>	
-			<div id="total" class="col-xs-6 text-right">
+			<div id="total" class="col-xs-6 text-right" ng-controller="CalculatorCtrl">
 				{{totalAmount || '$0.00'}}
 			</div>	
 		</div>
@@ -26,12 +26,8 @@
 					<input type="{{l.type}}" ng-model="l.selected" name="{{l.name}}" required="{{l.required}}" ng-change="toggleHide(l.reveals); updateValues(l.name, l.value)" ng-if="l.type == 'checkbox'" /> <span ng-if="l.type == 'checkbox'">{{l.label}}</span>
 
 					<!-- Radio / Button Group -->
-						
-					<div class="btn-group col-xs-12" data-toggle="buttons" ng-if="l.type == 'radio'">
-						<label for="" class="btn btn-primary col-xs-6" ng-repeat="o in l.options">
-							<input type="radio" ng-model="l.name" value="asdasd" id="{{o}}" name="{{l.name}}" autocomplete="off">{{o}}
-						</label>
-						{{ l.name }} : {{l.value || 0}}
+					<div class="btn-group col-xs-12" ng-if="l.type == 'radio'">
+						<label class="btn btn-primary col-xs-6" ng-repeat="o in l.options" ng-model="l.value" btn-radio="o" ng-change="updateValues(l.name, l.value)">{{o}}</label>
 					</div>
 
 					<!-- Dropdown -->
@@ -42,7 +38,7 @@
 					<!-- Time -->
 					<div ng-controller="TimeCtrl" ng-if="l.type == 'time'">
 						<h3>{{l.label}}</h3>
-						<input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" step="360" required="{{l.required}}" ng-change="updateValues(l.name, l.value)" class="form-control visible-sm visible-xs" />
+						<!-- <input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" step="360" required="{{l.required}}" ng-change="updateValues(l.name, l.value)" value="mytime" class="form-control visible-sm visible-xs" /> -->
 						<timepicker ng-model="l.value" name="{{l.name}}" ng-change="changed(l.value)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ng-change="updateValues(l.name, l.value)" class="hidden-sm hidden-xs"></timepicker>
 					</div>
 

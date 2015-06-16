@@ -12,8 +12,10 @@ angular.module('acApp')
 
   // console.log($('timepicker'));
 
-  $scope.mytime = new Date();
-  $scope.mytime.setMinutes(0);
+  $scope.now = moment();
+  $scope.now.minutes(Math.ceil($scope.now.minutes() / 6) * 6);
+  console.log($scope.now);
+  // $scope.mytime.setMinutes(0);
 
   $scope.hstep = 1;
   $scope.mstep = 6;
@@ -21,13 +23,6 @@ angular.module('acApp')
   $scope.ismeridian = true;
   $scope.toggleMode = function() {
     $scope.ismeridian = !$scope.ismeridian;
-  };
-
-  $scope.update = function() {
-    var d = new Date();
-    d.setHours( 14 );
-    d.setMinutes( 0 );
-    $scope.mytime = d;
   };
 
   $scope.clear = function() {

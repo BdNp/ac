@@ -18,11 +18,23 @@ angular.module('acApp')
     });    
   }
 
-  $scope.userValues = {};
+  $scope.userValues = {
+    timeIn: $scope.acFields
+  };
+
   $scope.updateValues = function(k,v) {
-    console.log(k);
     $scope.userValues[k] = v;
   }
+
+  $scope.updateTime = function(o) {
+
+  }
+
+  // Set Default Times, get now and straight-8
+  $scope.now = moment();
+  $scope.now.minutes(Math.ceil($scope.now.minutes() / 6) * 6);
+  $scope.now = $scope.now.toDate();
+  $scope.straightEight = $scope.now.add(8, 'h').toDate();
 
   // Dropdown options for Union, Role & Format. Change later to objects
   $scope.zoneOptions = ['NY', 'LA'];
@@ -106,7 +118,9 @@ angular.module('acApp')
       fieldset: 'times', 
       name: 'timeIn',
       label: 'Time In', 
-      type: 'time',     
+      type: 'time',
+      // value: moment(),
+      value: $scope.now,
       class: "col-xs-6",
       required: true,
       visible: true,
@@ -115,7 +129,8 @@ angular.module('acApp')
       fieldset: 'times', 
       name: 'timeOut',
       label: 'Time Out', 
-      type: 'time',     
+      type: 'time',
+      value: $scope.straightEight,
       class: "col-xs-6",
       required: true,
       visible: true,
