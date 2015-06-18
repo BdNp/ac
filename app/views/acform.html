@@ -6,40 +6,40 @@
 			</div>	
 			<div id="total" class="col-xs-6 text-right" ng-controller="CalculatorCtrl">
 				{{totalAmount || '$0.00'}}
+				{{values}}
 			</div>	
 		</div>
 	</div>	
 </section>
 
 <form name="mainForm" id="mainForm">
-					{{userValues || 0}}
 
 	<div ng-repeat="f in fieldsets">
 		<fieldset class="row" id="{{f.name}}">
-			<div ng-repeat="l in f.fields">
-				<label class="{{l.class}}" ng-show="l.visible">
-					<label for="{{l.name}}" ng-if="l.type != 'checkbox'">{{l.label}}</label>
+			<div ng-repeat="field in f.fields">
+				<label class="{{field.class}}" ng-show="field.visible">
+					<label for="{{field.name}}" ng-if="field.type != 'checkbox' && field.type != 'time'">{{field.label}}</label>
 					<!-- Text || Number -->
-					<input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" required="{{l.required}}" class="form-control" ng-change="updateValues(l.name, l.value)" ng-if="l.type == 'text'" />
-					<input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" required="{{l.required}}" class="form-control" ng-change="updateValues(l.name, l.value)" min="0" ng-if="l.type == 'number'" />
+					<input ng-model="field.value" name="{{field.name}}" type="{{field.type}}" required="{{field.required}}" class="form-control" ng-change="updateValues(field)" ng-if="field.type == 'text'" />
+					<input ng-model="field.value" name="{{field.name}}" type="{{field.type}}" required="{{field.required}}" class="form-control" ng-change="updateValues(field)" min="0" ng-if="field.type == 'number'" />
 					<!-- Checkbox -->
-					<input type="{{l.type}}" ng-model="l.selected" name="{{l.name}}" required="{{l.required}}" ng-change="toggleHide(l.reveals); updateValues(l.name, l.value)" ng-if="l.type == 'checkbox'" /> <span ng-if="l.type == 'checkbox'">{{l.label}}</span>
+					<input type="{{field.type}}" ng-model="field.selected" name="{{field.name}}" required="{{field.required}}" ng-change="toggleHide(field.reveals); updateValues(field)" ng-if="field.type == 'checkbox'" /> <span ng-if="field.type == 'checkbox'">{{field.label}}</span>
 
 					<!-- Radio / Button Group -->
-					<div class="btn-group col-xs-12" ng-if="l.type == 'radio'">
-						<label class="btn btn-primary col-xs-6" ng-repeat="o in l.options" ng-model="l.value" btn-radio="o" ng-change="updateValues(l.name, l.value)">{{o}}</label>
+					<div class="btn-group col-xs-12" ng-if="field.type == 'radio'">
+						<label class="btn btn-primary col-xs-6" ng-repeat="o in field.options" ng-model="field.value" btn-radio="o" ng-change="updateValues(field)">{{o}}</label>
 					</div>
 
 					<!-- Dropdown -->
-					<select ng-model="l.value" name="{{l.name}}" required="{{l.required}}" class="form-control" ng-if="l.type == 'select'" ng-change="updateValues(l.name, l.value)" ng-options="o for o in l.options">
-						<option value="">{{l.label || "Select an option"}}</option>
+					<select ng-model="field.value" name="{{field.name}}" required="{{field.required}}" class="form-control" ng-if="field.type == 'select'" ng-change="updateValues(field)" ng-options="o for o in field.options">
+						<option value="">{{field.label || "Select an option"}}</option>
 					</select>
 
 					<!-- Time -->
-					<div ng-controller="TimeCtrl" ng-if="l.type == 'time'">
-						<h3>{{l.label}}</h3>
-						<!-- <input ng-model="l.value" name="{{l.name}}" type="{{l.type}}" step="360" required="{{l.required}}" ng-change="updateValues(l.name, l.value)" value="mytime" class="form-control visible-sm visible-xs" /> -->
-						<timepicker ng-model="l.value" name="{{l.name}}" ng-change="changed(l.value)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ng-change="updateValues(l.name, l.value)" class="hidden-sm hidden-xs"></timepicker>
+					<div ng-controller="TimeCtrl" ng-if="field.type == 'time'">
+						<h3>{{field.label}}</h3>
+						<input ng-model="field.value" name="{{field.name}}" type="{{field.type}}" step="360" required="{{field.required}}" ng-change="updateValues(field)" class="form-control visible-sm visible-xs" />
+						<timepicker ng-model="field.value" name="{{field.name}}" ng-change="updateValues(field)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" class="hidden-sm hidden-xs"></timepicker>
 					</div>
 
 				</label>

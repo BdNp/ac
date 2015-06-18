@@ -14,7 +14,7 @@ angular.module('acApp')
 
   $scope.now = moment();
   $scope.now.minutes(Math.ceil($scope.now.minutes() / 6) * 6);
-  console.log($scope.now);
+  // console.log($scope.now);
   // $scope.mytime.setMinutes(0);
 
   $scope.hstep = 1;
