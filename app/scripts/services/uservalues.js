@@ -27,7 +27,7 @@ angular.module('acApp')
       },
       setTime: function(key, value) {
         times[key] = value;
-        return times;
+        return values;
       }
     };
   });

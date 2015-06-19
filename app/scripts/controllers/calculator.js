@@ -10,14 +10,15 @@
 angular.module('acApp')
   .controller('CalculatorCtrl', function ($scope, userValues, Rules) {
     $scope.values = userValues.getValues();
-    $scope.hours = [];
+    $scope.hours = {};
 
-    $scope.difference = function(typeOfHours, tStart, tEnd) {
+    $scope.difference = function(tStart, tEnd) {
     	var output = moment(tEnd).diff(moment(tStart), 'hours', true);
-    	$scope.hours[typeOfHours] = output;
+    	// $scope.hours[typeOfHours] = output;
+    	return output
     }
 
-	console.log($scope.difference('work', $scope.values.timeIn, $scope.values.timeOut));
+	$scope.hours.total = $scope.difference($scope.values.times.timeIn, $scope.values.times.timeOut);
     // angular.forEach(values.times, function(t){
     // });
 
