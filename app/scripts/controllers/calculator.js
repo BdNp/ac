@@ -13,13 +13,12 @@ angular.module('acApp')
     $scope.hours = {};
 
     $scope.difference = function(tStart, tEnd) {
-    	var output = moment(tEnd).diff(moment(tStart), 'hours', true);
-    	// $scope.hours[typeOfHours] = output;
-    	return output
+    	return moment(tEnd).diff(moment(tStart), 'hours', true);
     }
 
-	$scope.hours.total = $scope.difference($scope.values.times.timeIn, $scope.values.times.timeOut);
-    // angular.forEach(values.times, function(t){
-    // });
+    $scope.$watchCollection('userValues', function(){
+        console.log('chagne');
+        $scope.hours.total = $scope.difference($scope.values.times.timeIn, $scope.values.times.timeOut);
+    });
 
   });

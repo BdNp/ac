@@ -31,9 +31,17 @@ angular.module('acApp')
     };
   
     $scope.updateValues = function(field) {
-      console.log(field);
-      if (field.type == 'time')
-        userValues.setTime(field.name, field.value);
+      if (field.type == 'time') {
+        var counterpart = $filter('getByName')($scope.acFields, field.counterpart); 
+        if( field.name.search('In') != -1 ) {
+          var timeIn = { name: field.name, value: field.value };
+          var timeOut = { name: counterpart.name, value: counterpart.value };
+        } else {
+          var timeIn = { name: counterpart.name, value: counterpart.value };
+          var timeOut = { name: field.name, value: field.value };
+        }
+        userValues.setTime( timeIn, timeOut, field.hourSet );
+      } 
       else
         userValues.setField(field.name, field.value);
     }
@@ -137,6 +145,8 @@ angular.module('acApp')
         class: "col-xs-6",
         required: true,
         visible: true,
+        counterpart: 'timeOut',
+        hourSet: 'work',
       },
       {
         fieldset: 'times', 
@@ -147,6 +157,8 @@ angular.module('acApp')
         class: "col-xs-6",
         required: true,
         visible: true,
+        counterpart: 'timeIn',
+        hourSet: 'work',
       },
       {
         fieldset: 'times', 
@@ -164,6 +176,8 @@ angular.module('acApp')
         type: 'time',
         class: "col-xs-6",
         visible: false,
+        counterpart: 'NDBOut',
+        hourSet: 'ndb',
       },
       {
         fieldset: 'times', 
@@ -172,6 +186,8 @@ angular.module('acApp')
         type: 'time',
         class: "col-xs-6",
         visible: false,
+        counterpart: 'NDBIn',
+        hourSet: 'ndb',
       },
       {
         fieldset: 'meals', 
@@ -198,6 +214,8 @@ angular.module('acApp')
         type: 'time',
         class: "col-xs-6",
         visible: false,
+        counterpart: 'meal1Out',
+        hourSet: 'meal1',
       },
       {
         fieldset: 'meals', 
@@ -206,6 +224,8 @@ angular.module('acApp')
         type: 'time',
         class: "col-xs-6",
         visible: false,
+        counterpart: 'meal1In',
+        hourSet: 'meal1',
       },
       {
         fieldset: 'meals', 
@@ -214,6 +234,8 @@ angular.module('acApp')
         type: 'time',
         class: "col-xs-6",
         visible: false,
+        counterpart: 'meal2Out',
+        hourSet: 'meal2',
       },
       {
         fieldset: 'meals', 
@@ -222,6 +244,8 @@ angular.module('acApp')
         type: 'time',
         class: "col-xs-6",
         visible: false,
+        counterpart: 'meal2In',
+        hourSet: 'meal2',
       },
       {
         fieldset: 'meals', 
