@@ -27,9 +27,9 @@ angular.module('acApp')
     }
   
     $scope.userValues = {
-      timeIn: $scope.acFields
+      // timeIn: $scope.acFields
     };
-  
+
     $scope.updateValues = function(field) {
       if (field.type == 'time') {
         var counterpart = $filter('getByName')($scope.acFields, field.counterpart); 
@@ -42,10 +42,18 @@ angular.module('acApp')
         }
         userValues.setTime( timeIn, timeOut, field.hourSet );
       } 
-      else
-        userValues.setField(field.name, field.value);
+      else {
+        if (field.type == 'checkbox'){
+          userValues.setField(field.name, field.selected);
+          if (field.name == 'fitting') 
+            $scope.toggleFitting(field.selected);
+        } else {
+          userValues.setField(field.name, field.value);
+        }
+      }
     }
-  
+
+    // Round minutes up to multiple of 6
     var roundMinutes = function(time) {
       time.seconds(0);
       time.millisecond(0);
@@ -53,9 +61,19 @@ angular.module('acApp')
     }
     // Set Default Times, get now and straight-8
     $scope.now = moment();
+    $scope.now = $scope.now.minutes(roundMinutes($scope.now)).toDate();
+    $scope.fitting = moment();
+    $scope.fitting = $scope.fitting.add(2, 'h').minutes(roundMinutes($scope.fitting)).toDate();
     $scope.straightEight = moment();
     $scope.straightEight = $scope.straightEight.add(8, 'h').minutes(roundMinutes($scope.straightEight)).toDate();
-    $scope.now = $scope.now.minutes(roundMinutes($scope.now)).toDate();
+
+    //Fitting Function: Set Out time to 2 hours from now if Fitting is selected
+    $scope.toggleFitting = function(currentValue) {
+      var out = $filter('getByName')($scope.acFields, 'timeOut'); 
+      if (currentValue)
+        out.value = $scope.fitting;
+      else out.value = $scope.straightEight;
+    }
   
     // Dropdown options for Union, Role & Format. Change later to objects
     $scope.zoneOptions = ['NY', 'LA'];
@@ -132,7 +150,7 @@ angular.module('acApp')
         label: 'Wardrobe Fitting', 
         type: 'checkbox',
         class: "col-xs-12",
-        reveals: ['ndb', 'mealBreaks', 'lunchPenalties', 'dinnerPenalties', 'wardrobeChanges', 'specialWardrobe', 'holiday', 'hair', 'wet', 'smoke', 'props', 'vehicle', 'mileage', 'misc', 'adjustment'],
+        reveals: ['ndb', 'meal1Break', 'meal2Break', 'lunchPenalties', 'dinnerPenalties', 'wardrobeChanges', 'specialWardrobe', 'holiday', 'hair', 'wet', 'smoke', 'props', 'vehicle', 'mileage', 'misc', 'adjustment'],
         visible: true,
       },
       {
@@ -140,7 +158,6 @@ angular.module('acApp')
         name: 'timeIn',
         label: 'Time In', 
         type: 'time',
-        // value: moment(),
         value: $scope.now,
         class: "col-xs-6",
         required: true,

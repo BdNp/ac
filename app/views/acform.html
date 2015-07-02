@@ -1,10 +1,8 @@
 <section id="result" class="row">
 	<div class="col-xs-12">
 		<div class="row">
-			<div class="col-xs-6">
-				Total
-			</div>	
-			<div id="total" class="col-xs-6 text-right" ng-controller="CalculatorCtrl">
+			<div id="total" class="" ng-controller="CalculatorCtrl">
+				{{values}}
 				<div class="row">
 					<div class="col-xs-4">Total</div>
 					<div class="col-xs-4"></div>
@@ -12,26 +10,25 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-4">Normal Hours</div>
-					<div class="col-xs-4">{{hours.normal}}</div>
+					<div class="col-xs-4">{{values.hours.normal || 0}}</div>
 					<div class="col-xs-4"></div>
 				</div>
-				<div class="row" ng-if="hours.ot > 0">
+				<div class="row" ng-if="values.hours.ot > 0">
 					<div class="col-xs-4">Time and a Half</div>
-					<div class="col-xs-4">{{hours.ot}}</div>
+					<div class="col-xs-4">{{values.hours.ot || 0}}</div>
 					<div class="col-xs-4"></div>
 				</div>
-				<div class="row" ng-if="hours.dt > 0">
+				<div class="row" ng-if="values.hours.dt > 0">
 					<div class="col-xs-4">Double Time</div>
-					<div class="col-xs-4">{{hours.dt}}</div>
+					<div class="col-xs-4">{{values.hours.dt || 0}}</div>
 					<div class="col-xs-4"></div>
 				</div>
-				<div class="row" ng-if="hours.gt > 0">
+				<div class="row" ng-if="values.hours.gt > 0">
 					<div class="col-xs-4">Golden Time</div>
-					<div class="col-xs-4">{{hours.ht}}</div>
+					<div class="col-xs-4">{{values.hours.gt || 0}}</div>
 					<div class="col-xs-4"></div>
 				</div>
-				
-				
+
 			</div>	
 		</div>
 	</div>	
