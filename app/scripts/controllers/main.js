@@ -9,9 +9,12 @@
  */
 angular.module('acApp')
   .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  	console.log('main');
+    $scope.getCharacters = function(returnScope) {
+      characters.api.getCharacters()
+        .success(function(data){
+          characters.db = data.posts;
+          returnScope = characters.db;
+        });
+    }
   });

@@ -10,7 +10,6 @@
 angular.module('acApp')
   .factory('Fields', [ '$http', function ($http) {
       // Service logic
-      // ...
   
       var urlBase = '/api/';
       var data = {};
@@ -95,7 +94,7 @@ angular.module('acApp')
           label: 'Wardrobe Fitting', 
           type: 'checkbox',
           class: "col-xs-12",
-          reveals: ['ndb', 'mealBreaks', 'lunchPenalties', 'dinnerPenalties', 'wardrobeChanges', 'specialWardrobe', 'holiday', 'hair', 'wet', 'smoke', 'props', 'vehicle', 'mileage', 'misc', 'adjustment'],
+          reveals: ['ndb', 'meal1Break', 'meal2Break', 'lunchPenalties', 'dinnerPenalties', 'wardrobeChanges', 'specialWardrobe', 'holiday', 'hair', 'wet', 'smoke', 'props', 'vehicle', 'mileage', 'misc', 'adjustment'],
           visible: true,
         },
         {
@@ -103,11 +102,12 @@ angular.module('acApp')
           name: 'timeIn',
           label: 'Time In', 
           type: 'time',
-          // value: moment(),
           value: data.now,
           class: "col-xs-6",
           required: true,
           visible: true,
+          counterpart: 'timeOut',
+          hourSet: 'work',
         },
         {
           fieldset: 'times', 
@@ -118,6 +118,8 @@ angular.module('acApp')
           class: "col-xs-6",
           required: true,
           visible: true,
+          counterpart: 'timeIn',
+          hourSet: 'work',
         },
         {
           fieldset: 'times', 
@@ -135,6 +137,8 @@ angular.module('acApp')
           type: 'time',
           class: "col-xs-6",
           visible: false,
+          counterpart: 'NDBOut',
+          hourSet: 'ndb',
         },
         {
           fieldset: 'times', 
@@ -143,6 +147,8 @@ angular.module('acApp')
           type: 'time',
           class: "col-xs-6",
           visible: false,
+          counterpart: 'NDBIn',
+          hourSet: 'ndb',
         },
         {
           fieldset: 'meals', 
@@ -169,6 +175,8 @@ angular.module('acApp')
           type: 'time',
           class: "col-xs-6",
           visible: false,
+          counterpart: 'meal1Out',
+          hourSet: 'meal1',
         },
         {
           fieldset: 'meals', 
@@ -177,6 +185,8 @@ angular.module('acApp')
           type: 'time',
           class: "col-xs-6",
           visible: false,
+          counterpart: 'meal1In',
+          hourSet: 'meal1',
         },
         {
           fieldset: 'meals', 
@@ -185,6 +195,8 @@ angular.module('acApp')
           type: 'time',
           class: "col-xs-6",
           visible: false,
+          counterpart: 'meal2Out',
+          hourSet: 'meal2',
         },
         {
           fieldset: 'meals', 
@@ -193,6 +205,8 @@ angular.module('acApp')
           type: 'time',
           class: "col-xs-6",
           visible: false,
+          counterpart: 'meal2In',
+          hourSet: 'meal2',
         },
         {
           fieldset: 'meals', 

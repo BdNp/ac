@@ -18,7 +18,7 @@ angular.module('acApp')
       hours: hours,
     };
 
-    // Public API here
+    // Service API here
     return {
       // times: {},
       // hours: {},
@@ -55,32 +55,35 @@ angular.module('acApp')
 
       // Create the set of worked hours
       updateHours: function() {
+        var normalCap, otCap, otMin, dtCap, dtMin, goldenMin, hours = this.data.hours;
         if (!values.hasOwnProperty('union') || !values.hasOwnProperty('zone')) return false;
         //set Caps
         if (values.fitting)
-             hours.normalCap = 2;
-        else hours.normalCap = (values.union.search("CW") != -1) ? 10 : 8;
+             normalCap = 2;
+        else normalCap = (values.union.search("CW") != -1) ? 10 : 8;
         if ( (values.union.search("CW") != -1 || values.union.search("non") != -1) || values.fitting) {
-          hours.otCap = -1;
+          otCap = -1;
         } else {
-          hours.otCap = (values.zone == "LA" ) ? 4 : 2;
-          hours.dtCap = (values.zone == "LA" ) ? 4 : 6;
-          hours.otMin = hours.normalCap;
-          hours.dtMin = hours.otMin + hours.otCap;
-          hours.goldenMin = hours.dtMin + hours.dtCap;
+          otCap = ( values.zone == "LA" ) ? 4 : 2;
+          dtCap = ( values.zone == "LA" ) ? 4 : 6;
+          otMin = normalCap;
+          dtMin = otMin + otCap;
+          goldenMin = dtMin + dtCap;
         } 
         
         // Set Normal Hours
-        hours.normal = (hours.work < hours.normalCap) ? hours.work : hours.normalCap;
+        hours.normal = (hours.work < normalCap) ? hours.work : normalCap;
         // Set OT Hours
-        if (hours.otCap == -1) {
-          hours.ot = hours.work - hours.normalCap;
+        if (otCap == -1) {
+          hours.ot = hours.work - normalCap;
         } else {
-          hours.ot = (hours.work < hours.dtMin) ? hours.work - hours.otMin : hours.otCap;
-          hours.dt = (hours.work < hours.goldenMin) ? hours.work - hours.dtMin : hours.dtCap;
-          hours.gt = (hours.work >= hours.goldenMin) ? hours.work - hours.goldenMin : 0;
+          hours.ot = (hours.work < dtMin) ? hours.work - otMin : otCap;
+          hours.dt = (hours.work < goldenMin) ? hours.work - dtMin : dtCap;
+          hours.gt = (hours.work >= goldenMin) ? hours.work - goldenMin : 0;
         }
+        // this.setField();
         this.getValues();
+        console.log(this.data);
       },
 
       // Spit out results
